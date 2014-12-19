@@ -10,6 +10,7 @@ app = Flask(__name__)
 def home():
     f = open('facts.txt', 'r')
     facts = f.readlines()
+    f.close()
     shuffle(facts)
     return render_template('home.html', fact=facts.pop())
 
