@@ -1,4 +1,4 @@
-# coding: utf-8
+#facts.pop() coding: utf-8
 from random import shuffle
 
 from flask import Flask, render_template
@@ -24,4 +24,4 @@ def random_fact():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=80, debug=True)
+    app.run(host="0.0.0.0", port=8000, debug=True)
