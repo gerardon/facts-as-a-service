@@ -4,7 +4,7 @@ from fabric.api import env, task, run, sudo, cd, settings, prefix
 
 @task
 def live():
-    env.user = 'ubuntu'
+    env.user = 'deploy'
 
     release = remote_clone()
     prepare_virtualenv(release)
@@ -12,8 +12,8 @@ def live():
     pip('install -r {requirements}'.format(requirements=requirements), release=release)
 
     with cd(env.RELEASES):
-        run('rm -rf current')
-        run('ln -s {release} current'.format(release=release))
+        sudo('rm -rf current')
+        sudo('ln -s {release} current'.format(release=release))
 
     restart_services()
 
@@ -38,17 +38,19 @@ def remote_clone():
     return release
 
 
-def prepare_virtualenv():
+def prepare_virtualenv(release='current'):
+    env.user = 'ubuntu'
+
     sudo('pip install virtualenv')
 
-    with settings(hide('warnings'), user='deploy', warn_only=True):
+    with settings(user='deploy', warn_only=True):
         with cd(env.RELEASES.child(release)):
             run('virtualenv --no-site-packages --unzip-setuptools .')
 
 
 def pip(command, flags='', release='current'):
     assert command
-    with settings(hide('warnings'), user='deploy', warn_only=True):
+    with settings(user='deploy', warn_only=True):
         with cd(env.RELEASES.child(release)):
             with prefix('source bin/activate'):
                 run('pip {command} {flags}'.format(

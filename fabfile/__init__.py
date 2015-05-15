@@ -3,6 +3,9 @@ from unipath import Path
 
 from fabric.api import env, task
 
+import app
+import server
+
 
 @task
 def go():
