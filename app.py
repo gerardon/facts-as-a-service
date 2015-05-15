@@ -1,4 +1,4 @@
-#facts.pop() coding: utf-8
+# coding: utf-8
 from random import shuffle
 
 from flask import Flask, render_template
