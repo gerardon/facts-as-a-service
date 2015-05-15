@@ -1,5 +1,5 @@
 upstream facts_as_a_service {
-    server 127.0.0.1:8010;
+    server 127.0.0.1:8099;
 }
 
 server {
