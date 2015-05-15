@@ -1,0 +1,52 @@
+upstream upstream_app_server {
+    server 127.0.0.1:8010;
+}
+
+########## DEMO
+server {
+    listen 80;
+    charset utf-8;
+
+    server_name demoincompany.grupobrmed.com.br;
+
+    access_log /opt/plataforma-brmed/log/nginx_access.log;
+    error_log /opt/plataforma-brmed/log/nginx_error.log;
+
+    location /robots.txt {
+        access_log off;
+        alias /opt/plataforma-brmed/releases/current/project/host/robots_stage.txt;
+    }
+
+    location /static/ {
+        # if asset versioning is used
+        if ($query_string) {
+            expires max;
+        }
+
+        access_log off;
+        autoindex on;
+        alias /opt/plataforma-brmed/releases/current/project/public/;
+    }
+
+    include /opt/plataforma-brmed/releases/current/project/host/routes.conf;
+
+}
+
+
+########## PRODUCTION
+server {
+    listen 80;
+    charset utf-8;
+
+    server_name incompany.grupobrmed.com.br;
+
+    access_log /opt/plataforma-brmed/log/nginx_access.log;
+    error_log /opt/plataforma-brmed/log/nginx_error.log;
+
+    location /robots.txt {
+        access_log off;
+        alias /opt/plataforma-brmed/releases/current/project/host/robots.txt;
+    }
+
+    include /opt/plataforma-brmed/releases/current/project/host/routes.conf;
+}
