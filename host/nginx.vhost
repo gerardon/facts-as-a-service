@@ -1,5 +1,5 @@
 upstream facts_as_a_service {
-    server 127.0.0.1:8099;
+    server unix:/tmp/facts_as_a_service.sock;
 }
 
 server {
