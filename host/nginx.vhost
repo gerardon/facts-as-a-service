@@ -9,14 +9,7 @@ server {
     server_name facts.posdojo.us;
 
     location / {
-        try_files $uri @proxy_to_app;
-    }
-
-    location @proxy_to_app {
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $http_host;
-        proxy_redirect off;
-        proxy_pass_request_headers on;
-        proxy_pass http://facts_as_a_service;
+        uwsgi_pass facts_as_a_service;
+        include /opt/facts-as-a-service/releases/current/host/uwsgi_params;
     }
 }
