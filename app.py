@@ -1,10 +1,14 @@
 # coding: utf-8
-from random import shuffle
+from random import randrange
 
 from flask import Flask, render_template
 
+f = open('facts.txt', 'r')
+FACTS = f.readlines()
+f.close()
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def home():
@@ -16,11 +20,7 @@ def api():
 
 
 def random_fact():
-    f = open('facts.txt', 'r')
-    facts = f.readlines()
-    f.close()
-    shuffle(facts)
-    return facts.pop()
+    return FACTS[randrange(len(FACTS))]
 
 
 if __name__ == "__main__":
